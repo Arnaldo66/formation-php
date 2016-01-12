@@ -1,51 +1,99 @@
 <?php
 class Personnage
 {
-  private $_force;
-  private $_localisation;
-  private $_experience;
+  private $_id;
+  private $_nom;
+  private $_forcePerso;
   private $_degats;
+  private $_niveau;
+  private $_experience;
+	
+  
+  public function __construct(array $donnees){
+  	$this->hydrate($donnees);
+  }
+  
+  // Un tableau de donn√©es doit √™tre pass√© √† la fonction (d'o√π le pr√©fixe ¬´ array ¬ª).
+	public function hydrate(array $donnees)
+	{
+		foreach ($donnees as $key => $value)
+		{
+			// On r√©cup√®re le nom du setter correspondant √† l'attribut.
+			$method = 'set'.ucfirst($key);
+		
+			// Si le setter correspondant existe.
+			if (method_exists($this, $method))
+			{
+				// On appelle le setter.
+				$this->$method($value);
+			}
+		}
+	}
 
-  public function __construct($force, $degats) // Constructeur demandant 2 paramËtres
+  public function id() { return $this->_id; }
+  public function nom() { return $this->_nom; }
+  public function forcePerso() { return $this->_forcePerso; }
+  public function degats() { return $this->_degats; }
+  public function niveau() { return $this->_niveau; }
+  public function experience() { return $this->_experience; }
+
+  public function setId($id)
   {
-    echo 'Voici le constructeur !'; // Message s'affichant une fois que tout objet est crÈÈ.
-    $this->setForce($force); // Initialisation de la force.
-    $this->setDegats($degats); // Initialisation des dÈg‚ts.
-    $this->_experience = 1; // Initialisation de l'expÈrience ‡ 1.
+    // L'identifiant du personnage sera, quoi qu'il arrive, un nombre entier.
+    $this->_id = (int) $id;
+  }
+        
+  public function setNom($nom)
+  {
+    // On v√©rifie qu'il s'agit bien d'une cha√Æne de caract√®res.
+    // Dont la longueur est inf√©rieure √† 30 caract√®res.
+    if (is_string($nom) && strlen($nom) <= 30)
+    {
+      $this->_nom = $nom;
+    }
   }
 
-  // Mutateur chargÈ de modifier l'attribut $_force.
-  public function setForce($force)
+  public function setForcePerso($forcePerso)
   {
-    if (!is_int($force)) // S'il ne s'agit pas d'un nombre entier.
+    $forcePerso = (int) $forcePerso;
+            
+    // On v√©rifie que la force pass√©e est comprise entre 0 et 100.
+    if ($forcePerso >= 0 && $forcePerso <= 100)
     {
-      trigger_error('La force d\'un personnage doit Ítre un nombre entier', E_USER_WARNING);
-      return;
+      $this->_forcePerso = $forcePerso;
     }
-
-    if ($force > 100) // On vÈrifie bien qu'on ne souhaite pas assigner une valeur supÈrieure ‡ 100.
-    {
-      trigger_error('La force d\'un personnage ne peut dÈpasser 100', E_USER_WARNING);
-      return;
-    }
-
-    $this->_force = $force;
   }
 
-  // Mutateur chargÈ de modifier l'attribut $_degats.
   public function setDegats($degats)
   {
-    if (!is_int($degats)) // S'il ne s'agit pas d'un nombre entier.
-    {
-      trigger_error('Le niveau de dÈg‚ts d\'un personnage doit Ítre un nombre entier', E_USER_WARNING);
-      return;
-    }
+    $degats = (int) $degats;
 
-    $this->_degats = $degats;
+    // On v√©rifie que les d√©g√¢ts pass√©s sont compris entre 0 et 100.
+    if ($degats >= 0 && $degats <= 100)
+    {
+      $this->_degats = $degats;
+    }
+  }
+
+  public function setNiveau($niveau)
+  {
+    $niveau = (int) $niveau;
+
+    // On v√©rifie que le niveau n'est pas n√©gatif.
+    if ($niveau >= 0)
+    {
+      $this->_niveau = $niveau;
+    }
+  }
+
+  public function setExperience($exp)
+  {
+    $exp = (int) $exp;
+
+    // On v√©rifie que l'exp√©rience est comprise entre 0 et 100.
+    if ($exp >= 0 && $exp <= 100)
+    {
+      $this->_experience = $exp;
+    }
   }
 }
-
-
-$perso1 = new Personnage(60, 0); // 60 de force, 0 dÈg‚t
-
-$perso2 = new Personnage(100, 10); // 100 de force, 10 dÈg‚ts

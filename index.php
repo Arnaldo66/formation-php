@@ -1,11 +1,24 @@
 <?php
+
 function chargerClasse($classe)
 {
-	require $classe . '.php'; // On inclut la classe correspondante au paramètre passé.
+	require $classe . '.php'; // On inclut la classe correspondante au paramï¿½tre passï¿½.
 }
 
 
-spl_autoload_register('chargerClasse'); // On enregistre la fonction en autoload pour qu'elle soit appelée dès qu'on instanciera une classe non déclarée.
+spl_autoload_register('chargerClasse'); // On enregistre la fonction en autoload pour qu'elle soit appelï¿½e dï¿½s qu'on instanciera une classe non dï¿½clarï¿½e.
 
+//appelle le constructeur du personnage, ce dernier hydrate l'objet
+$perso = new Personnage([
+	'nom' => 'Victor',
+	'forcePerso' => 5,
+	'degats' => 0,
+	'niveau' => 1,
+	'experience' => 0
+]);
 
-$perso = new Personnage(60,0);
+//recupÃ¨re la connection pour la passer au manager
+$db = new PDO('mysql:host=localhost;dbname=formation-php', 'root', '25041981');
+$manager = new PersonnageManager($db);
+//persiste le personnage
+$manager->add($perso);
