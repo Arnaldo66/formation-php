@@ -42,29 +42,34 @@ Class Personnage{
 	}
 	
 	public function getId(){
-		return $this->$_id;
+		return $this->_id;
 	}
 	
 	
 	public function getNom(){
-		return $this->$_nom;
+		return $this->_nom;
 	}
 	
 	public function setNom($nom){
 		if(is_string($nom)){
-			$this->$_nom = $nom;
+			$this->_nom = $nom;
 		}
 	}
 	
 	public function getDegats(){
-		return $this->$_degats;
+		return $this->_degats;
 	}
 	
 	public function setDegats($degats){
 		$degats = int($degats);
 		if($degats >= 0 && $degats <= 100){
-			$this->$_degats = $degats;
+			$this->_degats = $degats;
 		}
+	}
+	
+	public function nomValide()
+	{
+		return !empty($this->_nom);
 	}
 	
 }
