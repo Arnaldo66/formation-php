@@ -15,7 +15,7 @@ Class Personnage{
 	}
 	
 	public function hydrate(array $data){
-		foreach ($data as $k=>$v){
+		foreach ($data as $key=>$value){
 			$method = "set".ucFirst($key);
 			if(method_exists($this,$method)){
 				$this->$method($value);

@@ -29,7 +29,8 @@ if (isset($_SESSION['perso'])) // Si la session perso existe, on restaure l'obje
 if (isset($_POST['creer']) && isset($_POST['nom'])) // Si on a voulu créer un personnage.
 {
   $perso = new Personnage(['nom' => $_POST['nom']]); // On crée un nouveau personnage.
-//todo voir ici
+	
+  
   if (!$perso->nomValide())
   {
     $message = 'Le nom choisi est invalide.';

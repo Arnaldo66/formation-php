@@ -11,7 +11,7 @@ Class PersonnageManager{
 	public function add(Personnage $perso){
 		
 		$q = $this->_db->prepare('INSERT INTO personnages SET nom = :nom');
-		$q->bindValue(':nom', $perso->nom());
+		$q->bindValue(':nom', $perso->getNom());
     	$q->execute();
 		
     	$perso->hydrate([
