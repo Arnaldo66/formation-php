@@ -42,7 +42,7 @@ Class PersonnageManager{
 		return (bool) $q->fetchColumn();
 	}
 	
-	public function get(){
+	public function get($info){
 		if (is_int($info))
 		{
 			$q = $this->_db->query('SELECT id, nom, degats FROM personnages WHERE id = '.$info);
@@ -58,7 +58,7 @@ Class PersonnageManager{
 		}
 	}
 	
-	public function getList(){
+	public function getList($nom){
 		$persos = [];
 		
 		$q = $this->_db->prepare('SELECT id, nom, degats FROM personnages WHERE nom <> :nom ORDER BY nom');

@@ -61,7 +61,7 @@ Class Personnage{
 	}
 	
 	public function setDegats($degats){
-		$degats = int($degats);
+		$degats = (int) $degats;
 		if($degats >= 0 && $degats <= 100){
 			$this->_degats = $degats;
 		}
